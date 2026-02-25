@@ -1,0 +1,73 @@
+.synopsis-section {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.synopsis {
+  padding: 4rem;
+  max-width: 1400px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.synopsis-card {
+  width: 100%;
+  aspect-ratio: 2/3;
+  max-height: calc(100vh - 10rem);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(139,0,0,0.3);
+}
+.synopsis-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6) saturate(0.7) contrast(1.1);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+.synopsis-card:hover img {
+  transform: scale(1.03);
+  filter: brightness(0.7) saturate(0.8) contrast(1.1);
+}
+.synopsis-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom, transparent 40%, rgba(5,5,5,0.6)),
+    radial-gradient(ellipse at 50% 30%, rgba(139,0,0,0.2), transparent 70%);
+  pointer-events: none;
+}
+.synopsis-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--red-bright), transparent);
+  z-index: 2;
+}
+
+.synopsis-quote {
+  border-left: 2px solid var(--red-bright);
+  padding-left: 1.5rem;
+  margin: 2.5rem 0;
+  font-style: italic;
+  font-size: 1.35rem;
+  color: rgba(240,230,208,0.9);
+}
+.synopsis-body {
+  font-size: 1.2rem;
+  line-height: 1.9;
+  color: rgba(240,230,208,0.75);
+  font-weight: 300;
+}
+.synopsis-body strong {
+  color: var(--red-bright);
+  font-weight: 400;
+}

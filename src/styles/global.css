@@ -1,0 +1,144 @@
+/* ========================================
+   CSS VARIABLES & RESET
+======================================== */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --red: #8B0000;
+  --red-bright: #CC0000;
+  --red-glow: #FF1111;
+  --red-deep: #5C0000;
+  --black: #050505;
+  --dark: #0D0D0D;
+  --cream: #F0E6D0;
+  --smoke: rgba(255,255,255,0.06);
+}
+
+html {
+  /* scroll-behavior: smooth — REMOVED: conflicts with GSAP ScrollToPlugin.
+     GSAP handles all smooth scrolling; the CSS property causes the browser
+     to double-interpolate, resulting in positional offsets. */
+}
+
+body {
+  background: var(--black);
+  color: var(--cream);
+  font-family: 'Cormorant Garamond', serif;
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* GRAIN OVERLAY */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ========================================
+   SECTION LABELS & TITLES (shared)
+======================================== */
+.section-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.6em;
+  color: var(--red-bright);
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.2rem, 4vw, 3.5rem);
+  font-style: italic;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  color: var(--cream);
+}
+
+/* ========================================
+   ORNAMENT DIVIDER
+======================================== */
+
+.ornament-divider {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(139,0,0,0.3);
+  font-size: 1.2rem;
+  letter-spacing: 1rem;
+}
+
+/* ========================================
+   SCROLL REVEAL
+======================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-left.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.reveal-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.reveal-right.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ========================================
+   RESPONSIVE
+======================================== */
+@media (max-width: 900px) {
+  .hero, .presentation, .synopsis-section, .characters,
+  .pellicule-section, .trailer-section, .team {
+    height: auto !important;
+  }
+  nav { padding: 1.5rem 2rem; }
+  .nav-links { display: none; }
+  .synopsis { grid-template-columns: 1fr; padding: 4rem 2rem; gap: 3rem; }
+  .characters-grid { grid-template-columns: 1fr; padding: 0 2rem; gap: 1rem; }
+  .character-desc { max-height: none; opacity: 1; }
+  .team-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .footer-inner { flex-direction: column; gap: 2rem; text-align: center; }
+  .footer-copy { text-align: center; }
+  .characters { padding: 5rem 0; }
+  .characters-header { padding: 0 2rem; }
+  .pellicule-header { padding: 0 2rem; }
+  .presentation { padding: 4rem 2rem; }
+  .trailer-section { padding: 5rem 0; }
+  .team { padding: 5rem 2rem; }
+  .news { padding: 5rem 2rem; }
+  .news-timeline::before { left: 1rem; }
+  .news-dot { left: 1rem; }
+  .news-item,
+  .news-item:nth-child(even) {
+    flex-direction: column;
+    text-align: left;
+    padding-left: 3rem;
+    gap: 0.5rem;
+  }
+  .film-frame { width: 240px; height: 165px; }
+}

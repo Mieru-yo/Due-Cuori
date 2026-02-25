@@ -1,0 +1,56 @@
+.pellicule-section {
+  height: 100vh;
+  padding: 2rem 0;
+  background: var(--dark);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.pellicule-header {
+  text-align: center;
+  margin-bottom: 1rem;
+  padding: 0 4rem;
+  position: relative;
+  z-index: 3;
+}
+
+/* Strips wrapper — stacked with small gaps */
+.pellicule-strips {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  position: relative;
+}
+
+/* Side fade masks — strips vanish at edges */
+.pellicule-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(60px, 10vw, 180px);
+  z-index: 5;
+  pointer-events: none;
+}
+.pellicule-fade--left {
+  left: 0;
+  background: linear-gradient(to right, var(--dark) 0%, transparent 100%);
+}
+.pellicule-fade--right {
+  right: 0;
+  background: linear-gradient(to left, var(--dark) 0%, transparent 100%);
+}
+
+@media (max-width: 900px) {
+  .pellicule-section {
+    padding: 2rem 0;
+  }
+  .pellicule-header {
+    margin-bottom: 1rem;
+    padding: 0 1.5rem;
+  }
+  .pellicule-fade {
+    width: 40px;
+  }
+}

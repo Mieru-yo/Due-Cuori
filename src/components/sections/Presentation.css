@@ -1,0 +1,40 @@
+.presentation {
+  height: 100vh;
+  padding: 4rem;
+  background: var(--red);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.presentation::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 60% at 80% 20%, rgba(0,0,0,0.3), transparent),
+    radial-gradient(ellipse 50% 80% at 10% 90%, rgba(0,0,0,0.4), transparent);
+}
+.presentation-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+.presentation .section-label,
+.presentation-label {
+  color: rgba(240,230,208,0.5);
+}
+.presentation-text {
+  font-size: 1.25rem;
+  line-height: 2;
+  color: rgba(240,230,208,0.8);
+  font-weight: 300;
+  margin-top: 1rem;
+}
+.presentation-text strong {
+  color: var(--cream);
+  font-weight: 600;
+}

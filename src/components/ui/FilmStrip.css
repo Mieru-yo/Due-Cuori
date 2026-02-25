@@ -1,0 +1,203 @@
+/* ──────────────────────────────────────────────────────────
+   Film Strip — redesigned cinematic reel
+   ────────────────────────────────────────────────────────── */
+
+/* Container */
+.fs {
+  --fs-border: 14px;
+  --fs-frame-w: 290px;
+  --fs-frame-h: clamp(130px, 17vh, 190px);
+  --fs-gap: 4px;
+  --fs-speed: 50s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Speed variants */
+.fs--slow  { --fs-speed: 60s; }
+.fs--fast  { --fs-speed: 35s; }
+
+/* Size variants */
+.fs--sm {
+  --fs-frame-w: 220px;
+  --fs-frame-h: clamp(100px, 13vh, 145px);
+  --fs-border: 10px;
+}
+.fs--lg {
+  --fs-frame-w: 350px;
+  --fs-frame-h: clamp(160px, 21vh, 230px);
+  --fs-border: 16px;
+}
+
+/* ── Track ────────────────────────────────────────── */
+.fs-track {
+  display: flex;
+  width: max-content;
+  gap: var(--fs-gap);
+  animation: pellicule-scroll-left var(--fs-speed) linear infinite;
+}
+.fs--reverse .fs-track {
+  animation-name: pellicule-scroll-right;
+}
+
+.fs:hover .fs-track,
+.fs:hover .fs-sprocket-track {
+  animation-play-state: paused;
+}
+
+/* ── Sprocket borders ─────────────────────────────── */
+.fs-sprocket-border {
+  height: var(--fs-border);
+  background: #0d0d0d;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
+}
+.fs-sprocket-track {
+  display: flex;
+  gap: 60px;
+  padding: 0 30px;
+  width: max-content;
+  animation: pellicule-scroll-left var(--fs-speed) linear infinite;
+}
+.fs--reverse .fs-sprocket-track {
+  animation-name: pellicule-scroll-right;
+}
+.fs-sprocket {
+  width: 14px;
+  height: 8px;
+  flex-shrink: 0;
+  background: #070707;
+  border-radius: 2.5px;
+  border: 1px solid #1f1f1f;
+  box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.6);
+}
+.fs--sm .fs-sprocket {
+  width: 10px;
+  height: 6px;
+}
+
+/* ── Frame ─────────────────────────────────────────── */
+.fs-frame {
+  flex-shrink: 0;
+  width: var(--fs-frame-w);
+  height: var(--fs-frame-h);
+  position: relative;
+  overflow: hidden;
+  background: #080808;
+  border-left: 2px solid #151515;
+  border-right: 2px solid #151515;
+  cursor: pointer;
+}
+
+.fs-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.5) saturate(0.4) contrast(1.2) sepia(0.2);
+  transition: filter 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fs-frame:hover img {
+  filter: brightness(0.8) saturate(0.85) contrast(1.05) sepia(0.05);
+  transform: scale(1.06);
+}
+
+/* Vignette overlay */
+.fs-frame-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.45) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.15) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.25) 100%);
+  opacity: 1;
+  transition: opacity 0.6s ease;
+}
+.fs-frame:hover .fs-frame-overlay {
+  opacity: 0.4;
+}
+
+/* Red accent line on hover */
+.fs-frame::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--red-bright, #c0392b);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: 5;
+}
+.fs-frame:hover::before {
+  transform: scaleX(1);
+}
+
+/* Frame counter */
+.fs-frame-counter {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: rgba(240, 230, 208, 0.25);
+  z-index: 3;
+  pointer-events: none;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  transition: color 0.4s ease;
+}
+.fs-frame:hover .fs-frame-counter {
+  color: rgba(240, 230, 208, 0.5);
+}
+
+/* Label */
+.fs-frame-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2rem 0.85rem 0.65rem;
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.9) 0%, transparent 100%);
+  z-index: 4;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.fs-frame:hover .fs-frame-label {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fs-frame-label-text {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: rgba(240, 230, 208, 0.75);
+  letter-spacing: 0.04em;
+}
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .fs {
+    --fs-frame-w: 210px;
+    --fs-frame-h: 130px;
+    --fs-border: 9px;
+  }
+  .fs--lg {
+    --fs-frame-w: 260px;
+    --fs-frame-h: 165px;
+    --fs-border: 12px;
+  }
+  .fs--sm {
+    --fs-frame-w: 170px;
+    --fs-frame-h: 105px;
+    --fs-border: 7px;
+  }
+}
