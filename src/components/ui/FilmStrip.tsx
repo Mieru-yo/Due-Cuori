@@ -2,11 +2,12 @@ import type { GalleryFrame } from "@/data/gallery";
 import "./FilmStrip.css";
 
 interface FilmStripProps {
-  frames: GalleryFrame[];
-  reverse?: boolean;
-  speed?: "slow" | "normal" | "fast";
-  size?: "sm" | "md" | "lg";
-  frameOffset?: number;
+  readonly frames: GalleryFrame[];
+  readonly reverse?: boolean;
+  readonly speed?: "slow" | "normal" | "fast";
+  readonly size?: "sm" | "md" | "lg";
+  readonly frameOffset?: number;
+  readonly onFrameClick?: (image: string, alt: string) => void;
 }
 
 function SprocketBorder() {
@@ -29,6 +30,7 @@ export function FilmStrip({
   speed = "normal",
   size = "md",
   frameOffset = 0,
+  onFrameClick,
 }: FilmStripProps) {
   // Duplicate 4× so the first half = 2 full sets.
   // CSS translateX(-50%) scrolls exactly 2 sets, then loops seamlessly.
@@ -46,7 +48,19 @@ export function FilmStrip({
       <SprocketBorder />
       <div className="fs-track">
         {allFrames.map((frame, i) => (
-          <div key={i} className="fs-frame">
+          <div 
+            key={`${frame.image}-${i}`}
+            className="fs-frame"
+            onClick={() => onFrameClick?.(frame.image, frame.alt)}
+            role={onFrameClick ? "button" : undefined}
+            tabIndex={onFrameClick ? 0 : undefined}
+            onKeyDown={(e: React.KeyboardEvent) => {
+              if (onFrameClick && (e.key === 'Enter' || e.key === ' ')) {
+                e.preventDefault();
+                onFrameClick(frame.image, frame.alt);
+              }
+            }}
+          >
             <div className="fs-frame-counter">
               {String(((i + frameOffset) % frames.length) + 1).padStart(2, "0")}
               A

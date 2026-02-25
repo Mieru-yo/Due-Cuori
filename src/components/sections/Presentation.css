@@ -16,6 +16,25 @@
     radial-gradient(ellipse 60% 60% at 80% 20%, rgba(0,0,0,0.3), transparent),
     radial-gradient(ellipse 50% 80% at 10% 90%, rgba(0,0,0,0.4), transparent);
 }
+
+/* Thin vertical accent lines */
+.presentation-accent {
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  width: 1px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(240, 230, 208, 0.15) 30%,
+    rgba(240, 230, 208, 0.15) 70%,
+    transparent
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+.presentation-accent--left  { left: clamp(1rem, 4vw, 4rem); }
+.presentation-accent--right { right: clamp(1rem, 4vw, 4rem); }
 .presentation-inner {
   max-width: 900px;
   margin: 0 auto;

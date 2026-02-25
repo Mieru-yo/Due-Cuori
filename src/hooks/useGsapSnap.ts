@@ -132,9 +132,6 @@ export function useGsapSnap(panelSelector = ".snap-section") {
       } else {
         // Free zone → re-enter snap zone when scrolled back above boundary
         if (window.scrollY < freeY() - 10) {
-          // Snap to the last panel (Team) so it isn't skipped.
-          // goTo sets animating=true, which blocks Observer's onDown
-          // from immediately jumping to the panel before Team.
           const lastIdx = panels.length - 1;
           currentIndex = lastIdx;
           obs.enable();
@@ -160,15 +157,30 @@ export function useGsapSnap(panelSelector = ".snap-section") {
       }
     };
 
+    /* ── scroll-to-top reset ─────────────────────────── */
+
+    const onSnapResetTop = () => {
+      animating = true;
+      currentIndex = 0;
+      obs.enable();
+      globalThis.scrollTo(0, 0);
+      // Small delay so the onScroll handler doesn't re-trigger snap
+      setTimeout(() => {
+        animating = false;
+      }, 100);
+    };
+
     /* ── bind / cleanup ──────────────────────────────── */
 
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("keydown", onKeyDown);
+    window.addEventListener("snap-reset-top", onSnapResetTop);
 
     return () => {
       obs.kill();
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("keydown", onKeyDown);
+      window.removeEventListener("snap-reset-top", onSnapResetTop);
     };
   }, [panelSelector]);
 }

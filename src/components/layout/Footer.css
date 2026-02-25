@@ -11,12 +11,20 @@ footer {
   align-items: center;
 }
 .footer-logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.5rem;
-  letter-spacing: 0.1em;
-  color: var(--cream);
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+}
+.footer-logo-main {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.footer-logo-img {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
+  filter: brightness(0.95);
 }
 .footer-logo .rec-dot-footer {
   width: 6px;

@@ -18,11 +18,7 @@
   --smoke: rgba(255,255,255,0.06);
 }
 
-html {
-  /* scroll-behavior: smooth — REMOVED: conflicts with GSAP ScrollToPlugin.
-     GSAP handles all smooth scrolling; the CSS property causes the browser
-     to double-interpolate, resulting in positional offsets. */
-}
+
 
 body {
   background: var(--black);
@@ -41,6 +37,33 @@ body::before {
   opacity: 0.04;
   pointer-events: none;
   z-index: 9999;
+}
+
+/* HALFTONE DOT OVERLAY */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle, rgb(0, 0, 0) 1.1px, transparent 1px);
+  background-size: 4px 4px;
+  opacity: 0.1;
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: multiply;
+}
+
+/* CINEMATIC VIGNETTE */
+.vignette-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 50;
+  background: radial-gradient(
+    ellipse 100% 100% at 50% 50%,
+    transparent 60%,
+    rgba(0,0,0,0.85) 100%
+  );
 }
 
 /* ========================================

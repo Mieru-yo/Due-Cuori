@@ -10,4 +10,5 @@ export const navLinks: NavLink[] = [
   { href: "#trailer", label: "Trailer" },
   { href: "#equipe", label: "Équipe" },
   { href: "#actualites", label: "Actualités" },
+  { href: "#contact", label: "Contact" },
 ];

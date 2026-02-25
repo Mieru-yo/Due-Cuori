@@ -32,11 +32,6 @@
   to { opacity: 1; }
 }
 
-@keyframes rec-blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
 @keyframes scroll-pulse {
   0%, 100% { opacity: 1; transform: scaleY(1); }
   50% { opacity: 0.4; transform: scaleY(0.7); }

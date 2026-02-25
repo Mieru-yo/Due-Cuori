@@ -7,8 +7,8 @@ export function Footer() {
     <footer>
       <div className="footer-inner">
         <div className="footer-logo">
-          <div>
-            <span className="rec-dot-footer" /> REC STUDIO
+          <div className="footer-logo-main">
+            <img src={`${import.meta.env.BASE_URL}img/RecStudio-Logo.png`} alt="Rec Studio" className="footer-logo-img" />
           </div>
           <div className="footer-sub">Due Cuori, Un Destino</div>
         </div>

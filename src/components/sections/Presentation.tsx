@@ -5,6 +5,8 @@ import "./Presentation.css";
 export function Presentation() {
   return (
     <section className="presentation reveal snap-section">
+      <div className="presentation-accent presentation-accent--left" />
+      <div className="presentation-accent presentation-accent--right" />
       <div className="presentation-inner">
         <SectionLabel className="presentation-label">// Le Film</SectionLabel>
         <SectionTitle>Un court-métrage par Rec Studio</SectionTitle>

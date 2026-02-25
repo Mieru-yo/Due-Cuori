@@ -21,7 +21,7 @@ export function Navbar() {
   return (
     <nav>
       <div className="nav-logo">
-        <span className="rec-dot" /> REC STUDIO
+        <img src={`${import.meta.env.BASE_URL}img/RecStudio-Logo.png`} alt="Rec Studio" className="nav-logo-img" />
       </div>
       <ul className="nav-links">
         {navLinks.map((link) => (
