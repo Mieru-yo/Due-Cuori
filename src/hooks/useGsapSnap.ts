@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { Observer } from "gsap/Observer";
+// Observer imported from main gsap to avoid Windows case-sensitivity issues
+import { Observer } from "gsap/all";
 
 gsap.registerPlugin(ScrollToPlugin, Observer);
 
@@ -36,6 +37,7 @@ export function useGsapSnap(panelSelector = ".snap-section") {
     /** Y where the free-scroll zone begins (bottom of last snap panel) */
     const freeY = () => {
       const last = panels[panels.length - 1];
+      if (!last) return 0;
       return last.offsetTop + last.offsetHeight;
     };
 
@@ -43,7 +45,8 @@ export function useGsapSnap(panelSelector = ".snap-section") {
     const syncIndex = () => {
       const y = window.scrollY;
       for (let i = panels.length - 1; i >= 0; i--) {
-        if (y >= panels[i].offsetTop - 20) {
+        const panel = panels[i];
+        if (panel && y >= panel.offsetTop - 20) {
           currentIndex = i;
           return;
         }
@@ -55,11 +58,14 @@ export function useGsapSnap(panelSelector = ".snap-section") {
     const goTo = (index: number) => {
       if (animating) return;
       index = gsap.utils.clamp(0, panels.length - 1, index);
+      const targetPanel = panels[index];
+      if (!targetPanel) return;
+      
       animating = true;
       currentIndex = index;
 
       gsap.to(window, {
-        scrollTo: { y: panels[index].offsetTop, autoKill: false },
+        scrollTo: { y: targetPanel.offsetTop, autoKill: false },
         duration: 0.7,
         ease: "power2.inOut",
         overwrite: true,
